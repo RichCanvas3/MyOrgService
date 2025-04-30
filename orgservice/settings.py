@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'corsheaders',
     'ninja',
+    'ninja_extra',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
