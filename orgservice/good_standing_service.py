@@ -5,7 +5,16 @@ from lavague.contexts.openai import OpenaiContext
 from openai import OpenAI
 from urllib.parse import urlparse, parse_qs
 
-client = OpenAI()
+import os
+
+def get_openai_client():
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        raise EnvironmentError("Missing OPENAI_API_KEY")
+    return OpenAI(api_key=api_key)
+
+client = get_openai_client()
+
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
