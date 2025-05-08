@@ -8,6 +8,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     steps:
     - name: Checkout code
@@ -26,7 +29,7 @@ jobs:
     - name: Run migrations
       run: python manage.py migrate
 
-      
+
     - name: Collect static files
       run: python manage.py collectstatic --noinput
 
