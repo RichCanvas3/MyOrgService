@@ -8,3 +8,10 @@
 *  - scrapy
 *  - google api client
 *  - whois
+ 
+   - to get venv:
+   -   python -m venv my-venv
+   - to download reqs to venv
+   -   sudo venv/bin/pip install -r requirements.txt
+ 
+   -  Must install 'google-chrome-stable' into the venv or else the selenium driver will not initialize
