@@ -70,8 +70,14 @@ class GoodStandingService:
         log.info("............ get cred colorado ......")
 
         context = OpenaiContext(llm="gpt-4-turbo", mm_llm="gpt-4-turbo")
-
-        driver = SeleniumDriver(headless=False)
+        
+        try:
+            driver = SeleniumDriver(headless=False)
+        except Exception as e:
+            print("Error initializing SeleniumDriver:", str(e),
+                'Did you install google-chrome-stable and/or chromedriver?')
+            return None
+        
         action_engine = ActionEngine.from_context(context=context, driver=driver)
         world_model = WorldModel.from_context(context)
 
