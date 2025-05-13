@@ -2,7 +2,8 @@
 
 ## Goals
 
-  Our goal with this service is to use agentic AI to scrape data from the web, allowing the app to obtain publically available credentials for a desired business within Colorado, Delaware, or Missouri. We are also able to obtain the credentials of an email, domain, or website using a smimilar system. This all allows out app to take in credentials based off of a user's email, company, etc and verify them using ZK proofs. 
+* Use Agentic AI via OpenAI to obtain publically available company, email, domain, and website credentials in an efficient and autonomous manner
+* Gather data to be used for ZK Proofs
 
 ## Requirements
 
