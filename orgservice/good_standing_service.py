@@ -434,11 +434,14 @@ class GoodStandingService:
         if state.lower() == "colorado" or state.lower() == "co":
             rtn = self.get_cred_colorado(company)
 
-        if state.lower() == "delaware" or state.lower() == "de":
+        elif state.lower() == "delaware" or state.lower() == "de":
             rtn = self.get_cred_delaware(company)
 
-        if state.lower() == "missouri" or state.lower() == "de":
+        elif state.lower() == "missouri" or state.lower() == "de":
             rtn = self.get_cred_missouri(company)
+
+        else:
+            rtn = self.get_cred_colorado(company)
 
 
         return rtn
