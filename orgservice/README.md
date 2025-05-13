@@ -40,13 +40,18 @@ export OPENAI_API_KEY='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'
 ```sh
 python3 manage.py runserver 8501
 ```
-IN BROWSER:
-'http://127.0.0.1:8501/creds/good-standing/company?company=desiredcompany&state=companylocation (colorado, delaware, or missouri)
+## Running
+### In Browser
 
-or
+Input 
 
-'http://localhost:8501/creds/good-standing/company?company=desiredcompany&state=companylocation (colorado, delaware, or missouri)
+http://127.0.0.1:8501/creds/good-standing/company?company=desiredcompany&state=companylocation 
 
-Please change the desiredcompany and companylocation before hitting enter in the searchbar!!
+into your searchbar, changing desiredcompany to whatever company you wish to look up, and companylocation to colorado, delaware, or missouri.
 
+If that throws a 404 or just generally does not work, try this link following the instructions above:
+
+http://localhost:8501/creds/good-standing/company?company=desiredcompany&state=companylocation
+
+Remember to always change the desiredcompany and companylocation before hitting enter in the searchbar!!!
 
