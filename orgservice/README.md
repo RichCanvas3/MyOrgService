@@ -2,7 +2,7 @@
 
 ## Goals
 
-Our goal with this service is to use agentic AI to scrape data from the web, allowing the app to obtain publically available credentials for a desired business within Colorado, Delaware, or Missouri. We are also able to obtain the credentials of an email, domain, or website using a smimilar system. This all allows out app to take in credentials based off of a user's email, company, etc and verify them using ZK proofs. 
+  Our goal with this service is to use agentic AI to scrape data from the web, allowing the app to obtain publically available credentials for a desired business within Colorado, Delaware, or Missouri. We are also able to obtain the credentials of an email, domain, or website using a smimilar system. This all allows out app to take in credentials based off of a user's email, company, etc and verify them using ZK proofs. 
 
 ## Requirements
 
@@ -45,51 +45,51 @@ python3 manage.py runserver 8501
 ## Running
 ### In Browser
 
-Go to
+  Go to
 
-http://127.0.0.1:8501
+  http://127.0.0.1:8501
 
-or
+  or
 
-http://localhost:8501
+  http://localhost:8501
 
-These are both the base websites and will throw 404 errors until given input via the searchbar.
+  These are both the base websites and will throw 404 errors until given input via the searchbar.
 
 ### Getting Company Cedentials
 
-Input
+  Input
 
-http://127.0.0.1:8501/creds/good-standing/company?company=desiredcompany&state=companylocation 
+  http://127.0.0.1:8501/creds/good-standing/company?company=desiredcompany&state=companylocation 
 
-into your searchbar, changing desiredcompany to whatever company you wish to look up, and companylocation to colorado, delaware, or missouri.
+  into your searchbar, changing desiredcompany to whatever company you wish to look up, and companylocation to colorado, delaware, or missouri.
 
-If the server ever throws an error at any of these credential searches or just generally does not work, swith '127.0.0.1' out with 'localhost'.
+  If the server ever throws an error at any of these credential searches or just generally does not work, swith '127.0.0.1' out with 'localhost'.
 
-Remember to always change your queries from the 'desiredx' version before hitting enter in the searchbar!!!
+  Remember to always change your queries from the 'desiredx' version before hitting enter in the searchbar!!!
 
 ### Getting Email Credentials
 
-Input 
+  Input 
 
-http://127.0.0.1:8501/creds/good-standing/email?email=desiredemail
+  http://127.0.0.1:8501/creds/good-standing/email?email=desiredemail
 
-into your searchbar, changing desiredemail to the email you want to search.
+  into your searchbar, changing desiredemail to the email you want to search.
 
 ### Getting Domain Credentials
 
-Input
+  Input
 
-http://127.0.0.1:8501/creds/good-standing/domain?domain=desireddomain
+  http://127.0.0.1:8501/creds/good-standing/domain?domain=desireddomain
 
-into your searchbar, changing desireddomain to the domain you want to search.
+  into your searchbar, changing desireddomain to the domain you want to search.
 
 ### Getting Website Credentials
 
-Input
+  Input
 
-http://127.0.0.1:8501/creds/good-standing/website?website=desiredwebsite
+  http://127.0.0.1:8501/creds/good-standing/website?website=desiredwebsite
 
-into your searchbar, changing desiredwebsite to the website you want to search.
+  into your searchbar, changing desiredwebsite to the website you want to search.
 
 
 
