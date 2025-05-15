@@ -3,7 +3,6 @@ import scrapy
 class ColoradoSpider(scrapy.Spider):
     name = "colorado"
 
-    # You pass the URL as a command-line argument with -a url=...
     def __init__(self, url=None, *args, **kwargs):
         super(ColoradoSpider, self).__init__(*args, **kwargs)
         if not url:
@@ -34,7 +33,7 @@ class ColoradoSpider(scrapy.Spider):
                          i=0 
                          cleaned_rows = [] 
                          for r in rows:
-                              if i==0 or i==1 or i==9: #quick fix for repeat rows shwoing up, no idea why
+                              if i==0 or i==1 or i==9: #quick fix for repeat rows shwoing up, dont know why these ones do
                                    i+=1
                                    continue
                               else:
@@ -52,9 +51,6 @@ class ColoradoSpider(scrapy.Spider):
 class DelawareSpider(scrapy.Spider):
     name = "delaware"
      
-    
-
-    # You pass the URL as a command-line argument with -a url=...
     def __init__(self, url=None, *args, **kwargs):
         super(DelawareSpider, self).__init__(*args, **kwargs)
         if not url:
@@ -64,34 +60,30 @@ class DelawareSpider(scrapy.Spider):
     def parse(self, response):
           self.logger.info(f"Scraping: {response.url}")
      
-          #extract all tables
-          # Note: This is a simplified example. You may want to handle nested tables or other complexities.
-          # For each table, we will extract the rows and their respective cells
-          # and print them in a nicely formatted way.
           self.logger.info("\n== Tables ==")
           tables = response.css('table')
           if not tables:
                self.logger.info("No tables found on this page.")
                return
           for table_index, table in enumerate(tables, start=1):
-               if table_index == 1: # Only scrape the first table (no idea why the colorado site has so many repeat tables)
-                    rows = []
-                    for row in table.css('tr'):
-                         cells = row.css('th, td')
-                         row_data = [cell.css('::text').get(default='').strip() for cell in cells]
-                         row_data = [cell for cell in row_data if cell]  # Strip empty cells
-                         if row_data:
-                              if row_data not in rows:
-                                   rows.append(row_data)
+              
+            rows = []
+            for row in table.css('tr'):
+                cells = row.css('th, td')
+                row_data = [cell.css('::text').get(default='').strip() for cell in cells]
+                row_data = [cell for cell in row_data if cell]  # Strip empty cells
+                if row_data:
+                    if row_data not in rows:
+                        rows.append(row_data)
 
-                    yield {
-                         'type': 'table',
-                         'table_number': table_index,
-                         'rows': rows,
-                         'website': response.url
-                    }
+            yield {
+                'type': 'table',
+                'table_number': table_index,
+                'rows': rows,
+                'website': response.url
+            }
 
-class MissouriSpider(scrapy.Spider): #Missouri formatted in a really anoyying way (table within a weird selection menu, the html is god awful), so we have to do some extra work to get the data we want
+class MissouriSpider(scrapy.Spider): #Missouri formatted in a really annoying way (table within a weird selection menu, the html is god awful to read), so we have to do some extra work to get the data we want
      custom_settings = {
     'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
      'COOKIES_ENABLED': True,
@@ -99,7 +91,6 @@ class MissouriSpider(scrapy.Spider): #Missouri formatted in a really anoyying wa
 }
 
      name = "missouri"
-    # You pass the URL as a command-line argument with -a url=...
      def __init__(self, url=None, *args, **kwargs):
         super(MissouriSpider, self).__init__(*args, **kwargs)
         if not url:
@@ -125,10 +116,7 @@ class MissouriSpider(scrapy.Spider): #Missouri formatted in a really anoyying wa
                }
                print(type(rtn))
                yield rtn
-          #extract all tables
-          # Note: This is a simplified example. You may want to handle nested tables or other complexities.
-          # For each table, we will extract the rows and their respective cells
-          # and print them in a nicely formatted way.
+        
           
 
                     
