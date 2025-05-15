@@ -50,7 +50,26 @@ class GoodStandingService:
                 "address":"3501 wazee st ste 400, denver, co 80216, us"
             }
 
+        #Manual Scraper Call Method:
         
+        #result=state_spiders.run_colorado_spider(company)
+        #if result==[] or result==None:
+        #    print('Scraper encountered an issue. Check company name and selenium download')
+        #    rtn = {
+        #        "name": None,
+        #        "idNumber": None,
+        #        "form": None,
+        #        "status": None,
+        #        "formationDate": None, 
+        #        "state": None, 
+        #        "address": None
+        #    }
+        #else:
+        #    rtn=result[0]
+        
+            #should run as is, might require base selenium to be downloaded if not.
+        #make sure these two lines are the only two lines being run if using the manual scraper
+        #
         
         '''
         if company.lower() == "rich canvas llc":
@@ -99,109 +118,124 @@ class GoodStandingService:
         print("run step 2")
         agent.run_step("Enter " + company + " into the search box and hit enter")
 
-        print("run step 3")
-        agent.run_step("Find the table with header columns #, ID Number, Document Number, and select formation date link to sort the list ")
-
-        print("run step 4a")
-        step4aresult = agent.run("Extract the last row of data in the table as json, with fields id_number, name, event, status, formation_date")
-        print("....................................")
-        print("step4a result: " + step4aresult.output)
-        print("step4a state: " + str(step4aresult.success))
-
-        data = None
-        content = step4aresult.output
-        match = re.search(r'(\[.*\])', content)
-        if match:
-            json_string = match.group(1).lower().replace("_", "")
-            try:
-                data = json.loads(json_string)
-
-                print("Found valid JSON.")
-                print(data)
-            except json.JSONDecodeError:
-                print("Found text is not valid JSON.")
-
-        match = re.search(r'(\{.*\})', content)
-        if match:
-            json_string = match.group(1).lower().replace("_", "")
-            try:
-                data = json.loads(json_string)
-                data = [data]
-
-                print("Found valid JSON.")
-                print(data)
-            except json.JSONDecodeError:
-                print("Found text is not valid JSON.")
-
-        if data == None:
-            print("No JSON object found in the string.")
-            print(content)
-
-
-        last_row = data[-1]
-        last_id_number = last_row["idnumber"]
-
-        for item in reversed(data):
-            print(item["name"] + ", ", item["status"] + ", " + item["event"])
-
-
-
-        path = "https://www.coloradosos.gov/biz/BusinessEntityDetail.do?quitButtonDestination=BusinessEntityCriteriaExt&fileId=" + last_id_number + "&masterFileId="
-        agent.get(path)
-
-        '''
-        print("run step 4b")
-        step4bresult = agent.run("Find the first row in that table and extract the row data as json with fields name, event, status")
-        print("step4 result: " + step4bresult.output)
-
-        print("run step 4c")
-        agent.run_step("Select this row")
-        '''
-        print("run step 5")
-        agent.run_step("Find the table with the title of Details")
-        #print("output: " + str(result))
-
-        print("run step 6")
-        result = agent.run("get information from this Details table, extract data as json format and if exist use fields name, status, formation_date, id_number, form, jurisdiction, office_address")
-
-        if result.output == "[NONE]":
-            print("run try it again")
-            agent.run_step("Find the table with the title of Details")
-            result = agent.run("get information from this Details table, extract data as json format and if exist use fields name, status, formation_date, id_number, form, jurisdiction, office_address")
-
-        data = None
-        #content = "{   \"ID number\": \"20221748006\",   \"form\": \"Foreign Limited Liability Company\",   \"formation date\": \"07/31/2022\",   \"jurisdiction\": \"Delaware\",   \"name\": \"Aspenware Holding Company LLC\",   \"address\": \"3501 Wazee St Ste 400, Denver, CO 80216, US\",   \"status\": \"Good Standing\" }"
-        content = result.output
-
-        print("returned content: ", content)
-        match = re.search(r'(\{.*\})', content)
-        if match:
-            json_string = match.group(1).lower().replace("_", "")
-            try:
-                data = json.loads(json_string)
-                print("Found valid JSON.")
-                print(data)
-            except json.JSONDecodeError:
-                print("Found text is not valid JSON.")
+        print('Checking Name Validity')
+        checkstate=agent.run_step('Check if the page now has a line of text reading "Error - No results found for the specified name", return True if it does')
+        #check for errors in naming, not foolproof but works
+        if checkstate.output=='True':
+            rtn={'name':'not found',
+             'idNumber':'not found',
+             'form':'not found',
+             'status':'not found',
+             'formationDate':'not found',
+             'state':'not found',
+             'address':'not found'
+             }
+                
+            return rtn
         else:
-            print("No JSON object found in the string.")
-            print(content)
-
-        print("get name: " + str(data["name"]))
-
-        name = "name" in data 
-
-        rtn = {
-            "name": data["name"] if "name" in data else None,
-            "idNumber": data["idnumber"] if "idnumber" in data else None,
-            "form": data["form"] if "form" in data else None,
-            "status": data["status"] if "status" in data else None,
-            "formationDate": data["formationdate"] if "formationdate" in data else None, 
-            "state": data["jurisdiction"] if "jurisdiction" in data else None, 
-            "address": data["officeaddress"] if "officeaddress" in data else None
-        }
-
-        return rtn
+            print("run step 3")
+            agent.run_step("Find the table with header columns #, ID Number, Document Number, and select formation date link to sort the list ")
+    
+            print("run step 4a")
+            step4aresult = agent.run("Extract the last row of data in the table as json, with fields id_number, name, event, status, formation_date")
+            print("....................................")
+            print("step4a result: " + step4aresult.output)
+            print("step4a state: " + str(step4aresult.success))
+    
+            data = None
+            content = step4aresult.output
+            match = re.search(r'(\[.*\])', content)
+            if match:
+                json_string = match.group(1).lower().replace("_", "")
+                try:
+                    data = json.loads(json_string)
+    
+                    print("Found valid JSON.")
+                    print(data)
+                except json.JSONDecodeError:
+                    print("Found text is not valid JSON.")
+    
+            match = re.search(r'(\{.*\})', content)
+            if match:
+                json_string = match.group(1).lower().replace("_", "")
+                try:
+                    data = json.loads(json_string)
+                    data = [data]
+    
+                    print("Found valid JSON.")
+                    print(data)
+                except json.JSONDecodeError:
+                    print("Found text is not valid JSON.")
+    
+            if data == None:
+                print("No JSON object found in the string.")
+                print(content)
+    
+    
+            last_row = data[-1]
+            last_id_number = last_row["idnumber"]
+    
+            for item in reversed(data):
+                print(item["name"] + ", ", item["status"] + ", " + item["event"])
+    
+    
+    
+            path = "https://www.coloradosos.gov/biz/BusinessEntityDetail.do?quitButtonDestination=BusinessEntityCriteriaExt&fileId=" + last_id_number + "&masterFileId="
+            agent.get(path)
+    
+            '''
+            print("run step 4b")
+            step4bresult = agent.run("Find the first row in that table and extract the row data as json with fields name, event, status")
+            print("step4 result: " + step4bresult.output)
+    
+            print("run step 4c")
+            agent.run_step("Select this row")
+            '''
+            print("run step 5")
+            agent.run_step("Find the table with the title of Details")
+            #print("output: " + str(result))
+    
+            print("run step 6")
+            result = agent.run("get information from this Details table, extract data as json format and if exist use fields name, status, formation_date, id_number, form, jurisdiction, office_address")
+    
+            if result.output == "[NONE]":
+                print("run try it again")
+                agent.run_step("Find the table with the title of Details")
+                result = agent.run("get information from this Details table, extract data as json format and if exist use fields name, status, formation_date, id_number, form, jurisdiction, office_address")
+    
+            data = None
+            #content = "{   \"ID number\": \"20221748006\",   \"form\": \"Foreign Limited Liability Company\",   \"formation date\": \"07/31/2022\",   \"jurisdiction\": \"Delaware\",   \"name\": \"Aspenware Holding Company LLC\",   \"address\": \"3501 Wazee St Ste 400, Denver, CO 80216, US\",   \"status\": \"Good Standing\" }"
+            content = result.output
+    
+            print("returned content: ", content)
+            match = re.search(r'(\{.*\})', content)
+            if match:
+                json_string = match.group(1).lower().replace("_", "")
+                try:
+                    data = json.loads(json_string)
+                    print("Found valid JSON.")
+                    print(data)
+                except json.JSONDecodeError:
+                    print("Found text is not valid JSON.")
+            else:
+                print("No JSON object found in the string.")
+                print(content)
+    
+            print("get name: " + str(data["name"]))
+    
+            name = "name" in data 
+    
+            rtn = {
+                "name": data["name"] if "name" in data else None,
+                "idNumber": data["idnumber"] if "idnumber" in data else None,
+                "form": data["form"] if "form" in data else None,
+                "status": data["status"] if "status" in data else None,
+                "formationDate": data["formationdate"] if "formationdate" in data else None, 
+                "state": data["jurisdiction"] if "jurisdiction" in data else None, 
+                "address": data["officeaddress"] if "officeaddress" in data else None
+            }
+    
+            return rtn
 
 
     def get_cred_delaware(self, company: str):
