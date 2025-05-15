@@ -13,10 +13,6 @@ class ColoradoSpider(scrapy.Spider):
     def parse(self, response):
           self.logger.info(f"Scraping: {response.url}")
      
-          #extract all tables
-          # Note: This is a simplified example. You may want to handle nested tables or other complexities.
-          # For each table, we will extract the rows and their respective cells
-          # and print them in a nicely formatted way.
           self.logger.info("\n== Tables ==")
           tables = response.css('table')
           if not tables:
