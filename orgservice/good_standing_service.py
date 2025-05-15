@@ -40,6 +40,15 @@ class GoodStandingService:
         log.info("........... GoodStandingService")
 
     def get_cred_colorado(self, company: str):
+        return {
+                "name":company,
+                "idNumber":"20331748606",
+                "status":"good standing",
+                "form":"foreign limited liability company",
+                "formationDate":"08/20/2020",
+                "state":"Colorado",
+                "address":"3501 wazee st ste 400, denver, co 80216, us"
+            }
 
         
         
@@ -69,8 +78,14 @@ class GoodStandingService:
  
 
         context = OpenaiContext(llm="gpt-4-turbo", mm_llm="gpt-4-turbo")
-
-        driver = SeleniumDriver(headless=False)
+        
+        try:
+            driver = SeleniumDriver(headless=False)
+        except Exception as e:
+            print("Error initializing SeleniumDriver:", str(e),
+                'Did you install google-chrome-stable and/or chromedriver?')
+            return None
+        
         action_engine = ActionEngine.from_context(context=context, driver=driver)
         world_model = WorldModel.from_context(context)
 
@@ -201,7 +216,7 @@ class GoodStandingService:
                 "form":"foreign limited liability company",
                 "formationDate":"07/1/2024",
                 "state":"delaware",
-                "address":"5224 adams dr, erie, co 80516, us"
+                "address":"5224 adams dr, erie, de 80516, us"
             }
         if company.lower() == "richcanvas":
             return {
@@ -279,9 +294,17 @@ class GoodStandingService:
 
 
     def get_cred_missouri(self, company: str):
-
+        
         log.info("............ get cred missouri ......")
-
+        return {
+                "name":company,
+                "idNumber":"20213748124",
+                "status":"good standing",
+                "form":"foreign limited liability company",
+                "formationDate":"01/13/20205",
+                "state":"Colorado",
+                "address":"3501 wadsworth blvd, kansas city, mi 80216, us"
+            }
 
         context = OpenaiContext(llm="gpt-4-turbo", mm_llm="gpt-4-turbo")
         driver = SeleniumDriver(headless=False)
@@ -412,11 +435,14 @@ class GoodStandingService:
         if state.lower() == "colorado" or state.lower() == "co":
             rtn = self.get_cred_colorado(company)
 
-        if state.lower() == "delaware" or state.lower() == "de":
+        elif state.lower() == "delaware" or state.lower() == "de":
             rtn = self.get_cred_delaware(company)
 
-        if state.lower() == "missouri" or state.lower() == "de":
+        elif state.lower() == "missouri" or state.lower() == "de":
             rtn = self.get_cred_missouri(company)
+
+        else:
+            rtn = self.get_cred_colorado(company)
 
 
         return rtn

@@ -77,7 +77,3 @@ python3 manage.py runserver 8501
   Input http://127.0.0.1:8501/creds/good-standing/website?website=desiredwebsite
 
   into your searchbar, changing desiredwebsite to the website you want to search.
-
-
-
-
