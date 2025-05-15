@@ -154,12 +154,12 @@ def run_colorado_spider_process(companyNAME, return_dict):
      search.send_keys(Keys.RETURN)
      #button = driver.find_element(by=By.CLASS_NAME,value="button")
      #button.click()
-     driver.save_screenshot("screenshot.png")  # Save a screenshot for debugging
+     #driver.save_screenshot("screenshot.png")  # Save a screenshot for debugging
      
      link = driver.find_element(by=By.CLASS_NAME,value='odd').find_element(by=By.CSS_SELECTOR,value='a').get_attribute('href')
      
      driver.get(link)
-     driver.save_screenshot("screenshot2.png")  # Save a screenshot for debugging
+     #driver.save_screenshot("screenshot2.png")  # Save a screenshot for debugging
      url=driver.current_url
 
      processco = CrawlerProcess(get_project_settings())
