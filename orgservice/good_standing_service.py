@@ -66,8 +66,7 @@ class GoodStandingService:
                 "address":"616 E Speer Blvd, 3rd Floor, Denver, CO 80203, US"
             }
         '''
-
-        log.info("............ get cred colorado ......")
+ 
 
         context = OpenaiContext(llm="gpt-4-turbo", mm_llm="gpt-4-turbo")
 
@@ -192,6 +191,7 @@ class GoodStandingService:
 
     def get_cred_delaware(self, company: str):
 
+        print("hello world")
         log.info("............ get cred delaware ......")
 
         return {
@@ -393,7 +393,8 @@ class GoodStandingService:
 
 
     def get_cred_company(self, company: str, state: str):
-
+        
+        print("get_cred_company: ", company, state)
 
         # Colorado examples
         #businessName = "Aspenware"
