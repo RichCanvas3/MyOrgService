@@ -610,7 +610,7 @@ class GoodStandingService:
         print("...... domain name: ", dn)
 
 
-        return {"name": "NA", "domain": dn}
+        return {"name": dn.lower()}
     
 
     def get_cred_website(self, website: str):
@@ -621,6 +621,7 @@ class GoodStandingService:
 
         print("domain: ", domain)
 
+        '''
         if domain.lower() == "aspenware.com":
             return {
                 "name": "Aspenware Internet Solutions, Inc.", 
@@ -631,6 +632,6 @@ class GoodStandingService:
         print("who is: " + str(result))
         dn = result["Domain Name"]
         print("...... domain name: ", dn)
+        '''
 
-
-        return {"name": "NA", "domain": dn}
+        return {"name": dn.lower(),"formationDate": date[0:10]}
