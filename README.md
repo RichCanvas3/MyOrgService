@@ -32,18 +32,19 @@ sudo venv/bin/pip install -r requirements.txt
 
 ```
 
-### 2. Export OpenAI Key
+### 3. Export OpenAI Key
 
 ```sh
-export OPENAI_API_KEY='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'
+export OPENAI_API_KEY='insert-your-open-api-key-here'
 ```
 
-### 3. Run Server
+### 4. Run Server
 
 ```sh
 python3 manage.py runserver 8501
 ```
 ## Running
+
 ### In Browser
 
   Go to http://127.0.0.1:8501 or http://localhost:8501
@@ -52,7 +53,7 @@ python3 manage.py runserver 8501
 
 ### Getting Company Cedentials
 
-  Input http://127.0.0.1:8501/creds/good-standing/company?company=desiredcompany&state=companylocation 
+  Input http://127.0.0.1:8501/creds/good-standing/company?company=desiredcompany&state=companylocation
 
   into your searchbar, changing desiredcompany to whatever company you wish to look up, and companylocation to colorado, delaware, or missouri.
 
