@@ -1,10 +1,12 @@
 #to connect to databse: sudo su postgres, then /usr/local/pgsql/bin/psql -d COBusiness
+#some modules may be unused or not in the requirements.txt, I tried to add all but it may still error.
+#A couple currently obselete functions/tools present, do not delete will be useful for vectorization later.
 
 def sql_db_queryagent(question: str):
     from langchain_community.utilities import SQLDatabase
 
     try:
-        db = SQLDatabase.from_uri("postgresql://postgres:31132005@localhost/COBusiness")
+        db = SQLDatabase.from_uri("postgresql://postgres:31132005@localhost/COBusiness") #CHANGE THIS TO THE VALID usr:password and address/dbname FOR OUR DATABASE BEFORE PUSHING OR TORUBLESHOOTING !!!!!!!!!!!!!!!
         print(db.dialect)
         db.run("SELECT * FROM BusinessEntities Limit 5;")
     except Exception as e:
