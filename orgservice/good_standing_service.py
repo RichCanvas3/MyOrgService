@@ -30,6 +30,9 @@ import json
 from scrapy.crawler import CrawlerProcess
 from googleapiclient.discovery import build
 from .schema import GoodStandingSchema
+from orgservice import question_query
+from .question_query import sql_db_queryagent
+import psycopg2
 
 import logging as logging
 log = logging.getLogger(__name__)
@@ -50,6 +53,33 @@ class GoodStandingService:
                 "address":"3501 wazee st ste 400, denver, co 80216, us"
             }
 
+        """
+        #SQL Database Query Method (Using LangChain Agent), only push once SQL database is being hosted non-locally
+        
+        result=question_query.sql_db_queryagent(f'Give me the info for {company}. Include entityname, entityid, entitystatus, entitytype, entityformdate, principalstate, principaladdress, principalcity, and principalzipcode in that order')
+        info=result.strip('[').strip(']').strip('(').strip(')').split(', ')
+        
+        if len(info)<<9: 
+            rtn={
+                'name':info[0].strip("'"),
+                'idNumber':info[1].strip("'"),
+                'status':info[2].strip("'"),
+                'form':info[3].strip("'"),
+                'formationDate':info[4].strip("'"),
+                'state':info[5].strip("'"),
+                'address':f'{info[6].strip("'")}, {info[7].strip("'")}, {info[5].strip("'")} {info[8].strip(')').strip("'")}' 
+            }
+        else:
+            rtn={
+                'name':f'{info[0].strip("'")} {info[1].strip("'")}',
+                'idNumber':info[2].strip("'"),
+                'status':info[3].strip("'"),
+                'form':info[4].strip("'"),
+                'formationDate':info[5].strip("'"),
+                'state':info[6].strip("'"),
+                'address':f'{info[7].strip("'")}, {info[8].strip("'")}, {info[6].strip("'")} {info[9].strip("'")}' 
+            }
+        """
         #Manual Scraper Call Method:
         
         #result=state_spiders.run_colorado_spider(company)
