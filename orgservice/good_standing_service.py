@@ -33,6 +33,8 @@ from .schema import GoodStandingSchema
 from orgservice import question_query
 from .question_query import sql_db_queryagent
 import psycopg2
+from orgservice import about_us_search as abt
+import asyncio
 
 import logging as logging
 log = logging.getLogger(__name__)
@@ -43,6 +45,12 @@ class GoodStandingService:
         log.info("........... GoodStandingService")
 
     def get_cred_colorado(self, company: str):
+        try:
+            url=asyncio.run(abt.main(f'{company}'))
+        except Exception as e:
+            print(f'searchError: {e}')
+            url=None
+        
         return {
                 "name":company,
                 "idNumber":"20331748606",
@@ -50,7 +58,8 @@ class GoodStandingService:
                 "form":"foreign limited liability company",
                 "formationDate":"08/20/2020",
                 "state":"Colorado",
-                "address":"3501 wazee st ste 400, denver, co 80216, us"
+                "address":"3501 wazee st ste 400, denver, co 80216, us",
+                "url":url,
             }
 
         """
