@@ -30,6 +30,8 @@ source venv/bin/activate
 ```sh
 sudo venv/bin/pip install -r requirements.txt
 
+pip install langchain_openai
+pip install langchain_agentql
 ```
 
 ### 3. Export OpenAI Key
